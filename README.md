@@ -26,10 +26,22 @@ shut it all down:
 docker-compose down
 ```
 
+### quick mongo cli commands
+
+https://docs.mongodb.com/manual/reference/mongo-shell/
+
+```
+docker exec -it pets-app-db bash
+$ mongo
+> show dbs
+> use <db>
+> show collections
+> db.collection.find()
+```
+
 ### Upcoming features
 * instructions and config for deploying to various AWS services and GCP services
 * kubernetes related instructions and config
-* more REST API endpoints
 * automated testing and CI environment
 
 ### dockerhub page

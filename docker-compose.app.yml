@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  pets-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: neelypatel/pets-app
+    container_name: pets-app
+    env_file: .env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=db
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+    ports:
+      - "3001:3001"
