@@ -19,6 +19,8 @@ services:
     restart: on-failure
     depends_on:
       - mongo
+    networks:
+      - pets-app-net
 
   mongo:
     image: mongo:bionic
@@ -31,3 +33,10 @@ services:
       - "27017:27017"
     volumes:
       - ~/Volumes/mongo:/data/db
+    networks:
+      - pets-app-net
+
+networks:
+  pets-app-net:
+    external:
+      name: pet-superstore-api_default
