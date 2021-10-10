@@ -10,33 +10,17 @@ services:
     env_file: .env
     environment:
       - HELLO=$HELLO
-      # - MONGO_USERNAME=$MONGO_USERNAME
-      # - MONGO_PASSWORD=$MONGO_PASSWORD
-      # - MONGO_PORT=$MONGO_PORT
-      # - MONGO_DB=$MONGO_DB
     ports:
       - "3001:3001"
     restart: on-failure
     depends_on:
       - mongo
-    networks:
-      - pets-app-net
 
   mongo:
     image: mongo:bionic
     container_name: pets-app-db
     env_file: .env
-    # environment:
-    #   - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-    #   - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
     ports:
       - "27017:27017"
     volumes:
       - ~/Volumes/mongo:/data/db
-    networks:
-      - pets-app-net
-
-networks:
-  pets-app-net:
-    external:
-      name: pet-superstore-api_default

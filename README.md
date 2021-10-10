@@ -1,5 +1,5 @@
 # pets-app
-This app will be a microservice for a pet store and will handle the pet data processing. pets-app will connect to a database.
+This API will be a microservice for a example pets store website and will handle the pet data processing. pets-app will connect to a mongo database.
 
 ### Build & Run
 If you want to build locally:
@@ -36,7 +36,7 @@ $ mongo
 > show dbs
 > use <db>
 > show collections
-> db.collection.find()
+> db.<collection>.find()
 ```
 
 ### Upcoming features
