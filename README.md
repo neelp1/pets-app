@@ -1,29 +1,31 @@
 # pets-app
+
 This API will be a microservice for a example pets store website and will handle the pet data processing. pets-app will connect to a mongo database.
 
 ### Build & Run
-If you want to build locally:
+
+If you want to build:
 ```
-docker build -t neelypatel/pets-app .
+make build
 ```
-or you can pull the latest image:
+
+Create pets network (one time):
 ```
-docker pull neelypatel/pets-app
+make network
 ```
+
 To run it:
 ```
-docker run -d --name pets-app -p 3000:3000 neelypatel/pets-app
+make start
 ```
+
 Go to `localhost:3001` to see the message. You can also do a healthcheck at `localhost:3001/healthcheck`.
 
-### Docker Compose
-Start the app and the database:
+### Stop the app
+
+If you want to stop and remove the containers:
 ```
-docker-compose up -d --build
-```
-shut it all down:
-```
-docker-compose down
+make down
 ```
 
 ### quick mongo cli commands
@@ -31,8 +33,8 @@ docker-compose down
 https://docs.mongodb.com/manual/reference/mongo-shell/
 
 ```
-docker exec -it pets-app-db bash
-$ mongo
+make mongo_exec
+$ mongosh -u <username> -p <password>
 > show dbs
 > use <db>
 > show collections

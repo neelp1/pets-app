@@ -1,7 +1,7 @@
 {
   "name": "pets-app",
   "version": "1.0.0",
-  "description": "A test microservice which will sit between another microservice and a db.",
+  "description": "bootstrap microservice that connects to mongodb",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -12,6 +12,7 @@
   "author": "Neel Patel",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.17.1",
     "express-healthcheck": "^0.1.0",
     "mongodb": "^3.5.9"

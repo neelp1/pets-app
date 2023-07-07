@@ -4,23 +4,28 @@ services:
   pets-app:
     build:
       context: .
-      dockerfile: Dockerfile
     image: neelypatel/pets-app
     container_name: pets-app
-    env_file: .env
-    environment:
-      - HELLO=$HELLO
     ports:
       - "3001:3001"
-    restart: on-failure
+    networks:
+      - pets
     depends_on:
       - mongo
 
   mongo:
-    image: mongo:bionic
+    image: mongo:6
     container_name: pets-app-db
-    env_file: .env
     ports:
       - "27017:27017"
     volumes:
-      - ~/Volumes/mongo:/data/db
+      - ~/Volumes/pets:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    networks:
+      - pets
+
+networks:
+  pets:
+    external: true

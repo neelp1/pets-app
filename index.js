@@ -3,20 +3,29 @@ const app = express();
 
 app.use(express.json());
 
+require('dotenv').config()
+
 var MongoClient = require("mongodb").MongoClient;
 const ObjectID = require("mongodb").ObjectID;
+
 const username = process.env.MONGO_USERNAME;
 const password = process.env.MONGO_PASSWORD;
-const dburl = "mongodb://mongo:27017";
+const hostname = process.env.MONGO_HOSTNAME;
+const mongoport = process.env.MONGO_PORT;
+const mongodatabase = process.env.MONGO_DB;
+
+
+
+const dburl = `mongodb://${username}:${password}@${hostname}:${mongoport}`;
 
 //create .env file in route dir
-console.log(process.env.HELLO);
+//console.log(process.env.HELLO);
 
 MongoClient.connect(dburl, { useUnifiedTopology: true })
   .then(function (client) {
     console.log("connected to mongo!");
 
-    const db = client.db("pets");
+    const db = client.db(mongodatabase);
     const dogsCollection = db.collection("dogs");
 
     app.post("/api/pets/dog", (req, res) => {
