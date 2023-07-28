@@ -17,3 +17,6 @@ down:
 mongo_exec:
 	docker exec -it pets-app-db bash
 # mongosh -u mongouser -p mypassword
+
+build_prod:
+	docker build -t pets-app:prod .
