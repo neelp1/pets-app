@@ -3,7 +3,8 @@ const app = express();
 
 app.use(express.json());
 
-require('dotenv').config()
+//TODO: run if not prod / not kubernetes
+//require('dotenv').config()
 
 var MongoClient = require("mongodb").MongoClient;
 const ObjectID = require("mongodb").ObjectID;
@@ -16,10 +17,10 @@ const mongodatabase = process.env.MONGO_DB;
 
 
 
-const dburl = `mongodb://${username}:${password}@${hostname}:${mongoport}`;
-
-//create .env file in route dir
-//console.log(process.env.HELLO);
+const dburl = `mongodb://${username}:${password}@${hostname}:${mongoport}`
+console.log(hostname);
+console.log(mongoport);
+console.log(dburl);
 
 MongoClient.connect(dburl, { useUnifiedTopology: true })
   .then(function (client) {
@@ -78,7 +79,7 @@ MongoClient.connect(dburl, { useUnifiedTopology: true })
         .catch((error) => console.error(error));
     });
   })
-  .catch(function (err) {});
+.catch((error) => console.log(error));
 
 app.use(
   "/healthcheck",
