@@ -4,7 +4,7 @@
   "description": "bootstrap microservice that connects to mongodb",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node --require ./instrumentation.js index.js"
   },
   "keywords": [
     "microservice"
@@ -12,6 +12,10 @@
   "author": "Neel Patel",
   "license": "ISC",
   "dependencies": {
+    "@opentelemetry/api": "^1.4.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.39.0",
+    "@opentelemetry/sdk-metrics": "^1.15.2",
+    "@opentelemetry/sdk-node": "^0.41.2",
     "dotenv": "^16.3.1",
     "express": "^4.17.1",
     "express-healthcheck": "^0.1.0",

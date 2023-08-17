@@ -18,9 +18,9 @@ const mongodatabase = process.env.MONGO_DB;
 
 
 const dburl = `mongodb://${username}:${password}@${hostname}:${mongoport}`
-console.log(hostname);
-console.log(mongoport);
-console.log(dburl);
+//console.log(hostname);
+//console.log(mongoport);
+//console.log(dburl);
 
 MongoClient.connect(dburl, { useUnifiedTopology: true })
   .then(function (client) {
