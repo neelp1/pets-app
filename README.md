@@ -2,7 +2,24 @@
 
 This API will be a microservice for a example pets store website and will handle the pet data processing. pets-app will connect to a mongo database.
 
-### Build & Run
+### Run on kubernetes
+
+Build the images
+```
+docker build -t pets-app:prod .
+```
+
+Start kubeadm via Docker Desktop
+```
+kubectl apply -f kube/
+```
+
+Destroy kubeadm containers:
+```
+kubectl delete -f kube/
+```
+
+### Build & Run using 3 musketeers pattern
 
 If you want to build:
 ```
@@ -20,8 +37,6 @@ make start
 ```
 
 Go to `localhost:3001` to see the message. You can also do a healthcheck at `localhost:3001/healthcheck`.
-
-### Stop the app
 
 If you want to stop and remove the containers:
 ```
@@ -42,9 +57,4 @@ $ mongosh -u <username> -p <password>
 ```
 
 ### Upcoming features
-* instructions and config for deploying to various AWS services and GCP services
-* kubernetes related instructions and config
-* automated testing and CI environment
-
-### dockerhub page
-Coming soon...
+* Github Actions workflow
