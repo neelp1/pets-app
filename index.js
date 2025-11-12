@@ -3,11 +3,9 @@ const app = express();
 
 app.use(express.json());
 
-//TODO: run if not prod / not kubernetes
-//require('dotenv').config()
+require('dotenv').config()
 
-var MongoClient = require("mongodb").MongoClient;
-const ObjectID = require("mongodb").ObjectID;
+const { MongoClient, ObjectId } = require("mongodb");
 
 const username = process.env.MONGO_USERNAME;
 const password = process.env.MONGO_PASSWORD;
@@ -15,14 +13,12 @@ const hostname = process.env.MONGO_HOSTNAME;
 const mongoport = process.env.MONGO_PORT;
 const mongodatabase = process.env.MONGO_DB;
 
-
-
 const dburl = `mongodb://${username}:${password}@${hostname}:${mongoport}`
 //console.log(hostname);
 //console.log(mongoport);
 //console.log(dburl);
 
-MongoClient.connect(dburl, { useUnifiedTopology: true })
+MongoClient.connect(dburl)
   .then(function (client) {
     console.log("connected to mongo!");
 
@@ -34,9 +30,16 @@ MongoClient.connect(dburl, { useUnifiedTopology: true })
       dogsCollection
         .insertOne(req.body)
         .then((result) => {
-          res.send(result);
+          res.status(201).json({
+            success: true,
+            insertedId: result.insertedId,
+            acknowledged: result.acknowledged,
+          });
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send({ error: "Failed to create dog" });
+        });
     });
 
     app.get("/api/pets/dogs", function (req, res) {
@@ -46,11 +49,14 @@ MongoClient.connect(dburl, { useUnifiedTopology: true })
         .then((results) => {
           res.send(results);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send({ error: "Failed to fetch dogs" });
+        });
     });
 
     app.put("/api/pets/dog", (req, res) => {
-      var dogId = new ObjectID(req.body._id);
+      var dogId = new ObjectId(req.body._id);
       dogsCollection
         .findOneAndUpdate(
           { _id: dogId },
@@ -67,7 +73,10 @@ MongoClient.connect(dburl, { useUnifiedTopology: true })
         .then((result) => {
           res.send(result);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send({ error: "Failed to update dog" });
+        });
     });
 
     app.delete("/api/pets/dog", (req, res) => {
@@ -76,7 +85,10 @@ MongoClient.connect(dburl, { useUnifiedTopology: true })
         .then((result) => {
           res.send(result);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send({ error: "Failed to delete dog" });
+        });
     });
   })
 .catch((error) => console.log(error));
@@ -85,12 +97,12 @@ app.use(
   "/healthcheck",
   require("express-healthcheck")({
     healthy: function () {
-      return { everything: "is ok!" };
+      return { api: "running" };
     },
   })
 );
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (req, res) => res.send("Welcome to the Pets App!"));
 
-app.listen(3001, () => console.log("Example app listening on port 3001!"));
+app.listen(3001, () => console.log("Pets App listening on port 3001!"));
 //TODO: nodemon

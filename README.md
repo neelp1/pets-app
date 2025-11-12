@@ -21,6 +21,8 @@ kubectl delete -f kube/
 
 ### Build & Run using 3 musketeers pattern
 
+Create `.env` file for mongo credentials.
+
 If you want to build:
 ```
 make build
